@@ -1,21 +1,19 @@
 <script setup>
+import { ref } from "vue";
+import { useRouter } from "vue-router";
 
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+const router = useRouter();
+const schoolSubjects = ref("");
+const difficultyLevel = ref("");
 
 function submitForm() {
-  // Obtenha os dados do formulário
-  const formData = {
-    schoolSubjects: document.getElementById('schoolSubjects').value,
-    difficultyLevel: document.getElementById('difficultyLevel').value,
-  };
-
-  // Encaminhe para a tela de resultados
-  const router = useRouter();
-  router.push('/form-result');
-
-  // Chame a função na tela de resultados
-  router.currentRoute.value.meta.processForm(formData);
+  router.push({
+    name: "quiz",
+    params: {
+      schoolSubjects: schoolSubjects.value,
+      difficultyLevel: difficultyLevel.value,
+    },
+  });
 }
 </script>
 
@@ -23,13 +21,15 @@ function submitForm() {
   <div
     class="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-cyan-500 to-blue-500"
   >
-
     <!-- Título -->
-    <h1 class="text-5xl font-bold text-white drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] shadow-black mb-5">Quiz Generation IA</h1>
+    <h1
+      class="text-5xl font-bold text-white drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] shadow-black mb-5"
+    >
+      Quiz Generation IA
+    </h1>
 
     <!-- Formulário -->
     <div class="w-1/4 mx-auto bg-white p-6 rounded-md shadow-md">
-
       <form v-on:submit.prevent="submitForm">
         <!-- Primeiro Select -->
         <div class="mb-4">
@@ -38,6 +38,7 @@ function submitForm() {
           >
           <select
             id="schoolSubjects"
+            v-model="schoolSubjects"
             name="schoolSubjects"
             class="mt-1 p-2 w-full border rounded-md"
             required
@@ -65,6 +66,7 @@ function submitForm() {
           >
           <select
             id="difficultyLevel"
+            v-model="difficultyLevel"
             name="difficultyLevel"
             class="mt-1 p-2 w-full border rounded-md"
             required
