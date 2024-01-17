@@ -1,25 +1,77 @@
 <script setup>
-    import { ref } from 'vue';
+import { ref } from "vue";
+import { useRoute } from "vue-router";
 
-    const loading = ref(false)
-    const result = ref(null)
-    
-    const processForm = async (formData) => {
-    // Simule uma chamada assíncrona
-    loading.value = true;
-    setTimeout(() => {
-      // Lógica para processar os dados do formulário e obter resultados
-      result.value = `Resultados para disciplina: ${formData.schoolSubjects}, Nível de dificuldade: ${formData.difficultyLevel}`;
-      loading.value = false;
-    }, 2000); // Simulando uma resposta após 2 segundos
-};
+const route = useRoute();
+const schoolSubjects = route.params.schoolSubjects;
+const difficultyLevel = route.params.difficultyLevel;
+
+let result = ref("");
+let loading = ref(true);
+console.log(schoolSubjects, difficultyLevel);
+
+setTimeout(() => {
+  loading.value = false;
+}, 2000);
 </script>
 
 <template>
-    <div>
-        <div v-if="loading">Carregando...</div>
-        <div v-else>
-            carregou
-        </div>
+  <div
+    class="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-cyan-500 to-blue-500"
+  >
+    <div v-if="loading">
+      <span class="loader"></span>
+      <p class="text-white font-bold">Carregando...</p>
     </div>
+  </div>
 </template>
+
+<style scoped>
+.loader {
+  font-size: 48px;
+  color: #fff;
+  width: 1em;
+  height: 1em;
+  box-sizing: border-box;
+  background-color: currentcolor;
+  position: relative;
+  border-radius: 50%;
+  transform: rotateX(-60deg) perspective(1000px);
+}
+.loader:before,
+.loader:after {
+  content: "";
+  display: block;
+  position: absolute;
+  box-sizing: border-box;
+  top: 0;
+  left: 0;
+  width: inherit;
+  height: inherit;
+  border-radius: inherit;
+  animation: flowerFlow 1s ease-out infinite;
+}
+.loader:after {
+  animation-delay: 0.4s;
+}
+
+@keyframes flowerFlow {
+  0% {
+    opacity: 1;
+    transform: rotate(0deg);
+    box-shadow: 0 0 0 -0.5em currentcolor, 0 0 0 -0.5em currentcolor,
+      0 0 0 -0.5em currentcolor, 0 0 0 -0.5em currentcolor,
+      0 0 0 -0.5em currentcolor, 0 0 0 -0.5em currentcolor,
+      0 0 0 -0.5em currentcolor, 0 0 0 -0.5em currentcolor;
+  }
+  100% {
+    opacity: 0;
+    transform: rotate(180deg);
+    box-shadow: -1em -1em 0 -0.35em currentcolor,
+      0 -1.5em 0 -0.35em currentcolor, 1em -1em 0 -0.35em currentcolor,
+      -1.5em 0 0 -0.35em currentcolor, 1.5em -0 0 -0.35em currentcolor,
+      -1em 1em 0 -0.35em currentcolor, 0 1.5em 0 -0.35em currentcolor,
+      1em 1em 0 -0.35em currentcolor;
+  }
+}
+</style>
