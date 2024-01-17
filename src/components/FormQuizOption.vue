@@ -1,8 +1,21 @@
 <script setup>
 
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+
 function submitForm() {
-    // Lógica para enviar o formulário
-    console.log("Formulário enviado!");
+  // Obtenha os dados do formulário
+  const formData = {
+    schoolSubjects: document.getElementById('schoolSubjects').value,
+    difficultyLevel: document.getElementById('difficultyLevel').value,
+  };
+
+  // Encaminhe para a tela de resultados
+  const router = useRouter();
+  router.push('/form-result');
+
+  // Chame a função na tela de resultados
+  router.currentRoute.value.meta.processForm(formData);
 }
 </script>
 

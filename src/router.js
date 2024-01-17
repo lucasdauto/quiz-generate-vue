@@ -10,6 +10,11 @@ const routes = [
         path: '/form',
         name: 'form',
         component: () => import('./components/FormQuizOption.vue')
+    },
+    {
+        path: '/quiz',
+        name: 'quiz',
+        component: () => import('./components/Quiz.vue')
     }
 ]
 
