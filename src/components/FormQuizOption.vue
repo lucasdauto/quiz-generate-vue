@@ -24,8 +24,8 @@ function submitForm() {
             >Selecione a disciplina:</label
           >
           <select
-            id="select1"
-            name="select1"
+            id="schoolSubjects"
+            name="schoolSubjects"
             class="mt-1 p-2 w-full border rounded-md"
             required
           >
@@ -51,8 +51,8 @@ function submitForm() {
             >Selecione o nivel de dificuldade:</label
           >
           <select
-            id="select2"
-            name="select2"
+            id="difficultyLevel"
+            name="difficultyLevel"
             class="mt-1 p-2 w-full border rounded-md"
             required
           >
