@@ -1,8 +1,8 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
-import sendToChatGPT from '@/services/chatgpt.js';
-// import { mapState } from 'vuex';
+import Test from "./Test.vue";
+
 
 const route = useRoute();
 const schoolSubjects = route.params.schoolSubjects;
@@ -11,12 +11,10 @@ const difficultyLevel = route.params.difficultyLevel;
 let loading = ref(true);
 
 onMounted(() => {
-  sendToChatGPT(schoolSubjects, difficultyLevel).then((response) => {
-    console.log(response);
+  setTimeout(() => {
     loading.value = false;
-  });
-  
-})
+  }, 5000);
+});
 </script>
 
 <template>
@@ -27,9 +25,8 @@ onMounted(() => {
       <span class="loader"></span>
       <p class="text-white font-bold">Carregando...</p>
     </div>
-    <div class="w-2/5 mx-auto bg-white p-6 rounded-md shadow-md" v-else>
-      <h3 class="text-center">Simulado</h3>
-
+    <div class="w-2/5 mx-auto bg-white p-6 rounded-md shadow-md mt-10 mb-10" v-else>
+      <Test />
     </div>
   </div>
 </template>
