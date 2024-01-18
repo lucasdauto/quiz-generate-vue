@@ -11,7 +11,6 @@ import axios from "axios";
 
 const sendToChatGPT = async (schoolSubjects, difficulty) => {
   try {
-    const keyAPI = "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";
 
     const prompt = `Monte para mim um questionário de 10 perguntas similares ao ENEM sobre ${schoolSubjects} com questões com enunciado bem elaborados para leitura com bastante informação no grau de dificuldade ${difficulty}, trazendo no JSON e qual alternativa está correta. Desejo receber como resposta desse prompt somente o json, pois usarei a resposta em uma aplicação`;
 
