@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import FormQuizOption from "./FormQuizOption.vue";
 import TitleSystem from "./common/TitleSystem.vue";
+import WhiteLogo from "./common/WhiteLogo.vue";
 
 const buttons = ref([
   { text: "Gerador por Disciplina", route: "/gerador-por-disciplina" },
