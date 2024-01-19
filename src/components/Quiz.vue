@@ -18,9 +18,6 @@ onMounted(() => {
 </script>
 
 <template>
-  <div
-    class="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-cyan-500 to-blue-500"
-  >
     <div v-if="loading">
       <span class="loader"></span>
       <p class="text-white font-bold">Carregando...</p>
@@ -28,7 +25,6 @@ onMounted(() => {
     <div class="w-2/5 mx-auto bg-white p-6 rounded-md shadow-md mt-10 mb-10" v-else>
       <Test />
     </div>
-  </div>
 </template>
 <style scoped>
 .loader {

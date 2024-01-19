@@ -18,17 +18,6 @@ function submitForm() {
 </script>
 
 <template>
-  <div
-    class="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-cyan-500 to-blue-500"
-  >
-    <!-- Título -->
-    <h1
-      class="text-center text-5xl font-bold text-white drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] shadow-black mb-5"
-    >
-      Questões Inteligentes
-      <br />Adaptativas
-    </h1>
-
     <!-- Formulário -->
     <div class="w-1/4 mx-auto bg-white p-6 rounded-md shadow-md">
       <form v-on:submit.prevent="submitForm">
@@ -115,5 +104,4 @@ function submitForm() {
         </div>
       </form>
     </div>
-  </div>
 </template>
