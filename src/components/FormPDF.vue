@@ -3,6 +3,7 @@ import { ref, onMounted } from "vue";
 import { initFlowbite } from "flowbite";
 import WhiteLogo from "./common/WhiteLogo.vue";
 import { useToast } from "vue-toastification";
+import { useRouter } from "vue-router";
 
 // initialize components based on data attribute selectors
 onMounted(() => {
@@ -11,6 +12,7 @@ onMounted(() => {
 
 const file = ref(null);
 const toast = useToast();
+const router = useRouter();
 
 const handleFileChange = (event) => {
   const selectedFile = event.target.files[0];
@@ -38,6 +40,8 @@ const submitForm = () => {
     });
     return;
   }
+
+  router.push({ name: "quiz" });
 };
 </script>
 <template>

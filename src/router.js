@@ -12,7 +12,7 @@ const routes = [
     component: () => import("./components/FormQuizOption.vue"),
   },
   {
-    path: "/quiz/:schoolSubjects/:difficultyLevel",
+    path: "/quiz/:schoolSubjects?/:difficultyLevel?",
     name: "quiz",
     component: () => import("./components/Quiz.vue"),
     props: true,
