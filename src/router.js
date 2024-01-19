@@ -3,6 +3,11 @@ import { createRouter, createWebHistory } from "vue-router";
 const routes = [
   {
     path: "/",
+    name: "home",
+    component: () => import("./components/Home.vue"),
+  },
+  {
+    path: "/gerador-por-disciplina",
     name: "form",
     component: () => import("./components/FormQuizOption.vue"),
   },
@@ -11,6 +16,11 @@ const routes = [
     name: "quiz",
     component: () => import("./components/Quiz.vue"),
     props: true,
+  },
+  {
+    path: "/gerador-por-pdf",
+    name: "pdf",
+    component: () => import("./components/FormPDF.vue"),
   },
 ];
 
