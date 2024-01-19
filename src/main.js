@@ -1,5 +1,6 @@
 // import './assets/main.css'
 import "tailwindcss/tailwind.css";
+import "flowbite";
 
 import { createApp } from "vue";
 import App from "./App.vue";
