@@ -2,6 +2,7 @@
 import { ref, onMounted } from "vue";
 import { initFlowbite } from "flowbite";
 import WhiteLogo from "./common/WhiteLogo.vue";
+import { useToast } from "vue-toastification";
 
 // initialize components based on data attribute selectors
 onMounted(() => {
@@ -9,6 +10,7 @@ onMounted(() => {
 });
 
 const file = ref(null);
+const toast = useToast();
 
 const handleFileChange = (event) => {
   const selectedFile = event.target.files[0];
@@ -17,13 +19,24 @@ const handleFileChange = (event) => {
     const isPdf = selectedFile.name.toLowerCase().endsWith(".pdf");
 
     if (!isPdf) {
-      alert("Somente arquivos PDF (.pdf) são aceitos.");
+      toast.error("Somente arquivos PDF (.pdf) são aceitos.", {
+        timeout: 6000,
+      });
       // Limpar o input
       event.target.value = null;
       file.value = null;
     } else {
       file.value = selectedFile;
     }
+  }
+};
+
+const submitForm = () => {
+  if (!file.value) {
+    toast.error("Execute o upload de um arquivo PDF para continuar.", {
+      timeout: 6000,
+    });
+    return;
   }
 };
 </script>
@@ -49,7 +62,7 @@ const handleFileChange = (event) => {
     </section>
     <!-- Formulário -->
 
-    <form class="max-w-lg mx-auto">
+    <form class="max-w-lg mx-auto" @submit.prevent="submitForm">
       <label
         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         for="input-file"
