@@ -12,11 +12,7 @@ const buttons = ref([
 <template>
   <div class="flex flex-col items-center">
     <!-- Logo redacao online -->
-    <img
-      src="@/assets/logo-redacao-branca.svg"
-      alt="Logo Redação Online"
-      class="w-45 h-40 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] shadow-black"
-    />
+    <WhiteLogo />
     <div class="flex space-x-8">
       <TitleSystem />
       <div class="flex flex-col space-y-8 text-center">
