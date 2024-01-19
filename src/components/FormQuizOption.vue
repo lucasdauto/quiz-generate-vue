@@ -18,8 +18,8 @@ function submitForm() {
 </script>
 
 <template>
-    <!-- Formulário -->
-    <div class="w-1/4 mx-auto bg-white p-6 rounded-md shadow-md">
+  <div class="w-1/4 mx-auto bg-white p-6 rounded-md shadow-md">
+      <!-- Formulário -->
       <form v-on:submit.prevent="submitForm">
         <!-- Primeiro Select -->
         <div class="mb-4">
