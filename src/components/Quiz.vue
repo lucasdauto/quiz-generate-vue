@@ -41,6 +41,9 @@ const requestQuestions = async () => {
     });
     loading.value = false;
     responseData = response.data;
+
+    console.log(responseData);
+    
   } catch (error) {
     console.error("Error:", error);
   }
