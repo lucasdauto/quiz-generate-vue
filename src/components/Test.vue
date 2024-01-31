@@ -1,7 +1,9 @@
 <template>
-  <h2 class="text-center text-2xl font-bold">
-    {{ schoolSubjects.toUpperCase() }}
-  </h2>
+  <section class="mb-8">
+    <h2 class="text-center text-2xl font-bold">
+      {{ schoolSubjects.toUpperCase() }}
+    </h2>
+  </section>
   <form @submit.prevent="submitForm" class="space-y-4" v-if="!showResults">
     <div
       v-for="(question, index) in questions"

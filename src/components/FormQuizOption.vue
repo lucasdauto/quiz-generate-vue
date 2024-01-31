@@ -38,19 +38,18 @@ function submitForm() {
           required
         >
           <option value="">Selecione</option>
-          <option value="matematica">Matemática</option>
-          <option value="portugues">Português</option>
-          <option value="ingles">Inglês</option>
-          <option value="espanhol">Espanhol</option>
-          <option value="historia">História</option>
-          <option value="ciencias">Ciências</option>
-          <option value="geografia">Geografia</option>
-          <option value="filosofia">Filosofia</option>
-          <option value="biologia">Biologia</option>
-          <option value="quimica">Química</option>
-          <option value="fisica">Física</option>
-          <option value="sociologia">Sociologia</option>
-
+          <option value="Matemática">Matemática</option>
+          <option value="Português">Português</option>
+          <option value="Inglês">Inglês</option>
+          <option value="Espanhol">Espanhol</option>
+          <option value="História">História</option>
+          <option value="Ciências">Ciências</option>
+          <option value="Geografia">Geografia</option>
+          <option value="Filosofia">Filosofia</option>
+          <option value="Biologia">Biologia</option>
+          <option value="Química">Química</option>
+          <option value="Física">Física</option>
+          <option value="Sociologia">Sociologia</option>
         </select>
       </div>
 
