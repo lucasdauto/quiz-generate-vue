@@ -11,7 +11,6 @@ onMounted(() => {
   initFlowbite();
 });
 
-const file = ref(null);
 const toast = useToast();
 const router = useRouter();
 const store = useStore();
@@ -24,7 +23,8 @@ const handleFileChange = (event) => {
 
   if (selectedFile) {
     const isPdf = selectedFile.name.toLowerCase().endsWith(".pdf");
-    newFilePDF = selectedFile;
+    // Atribuir um novo valor à propriedade "value" do objeto ref
+    newFilePDF.value = selectedFile;
 
     if (!isPdf) {
       toast.error("Somente arquivos PDF (.pdf) são aceitos.", {
@@ -32,15 +32,15 @@ const handleFileChange = (event) => {
       });
       // Limpar o input
       event.target.value = null;
-      file.value = null;
+      newFilePDF.value = null;
     } else {
-      file.value = selectedFile;
+      newFilePDF.value = selectedFile;
     }
   }
 };
 
 const submitForm = () => {
-  if (!file.value) {
+  if (!newFilePDF.value) {
     toast.error("Execute o upload de um arquivo PDF para continuar.", {
       timeout: 6000,
     });
@@ -49,7 +49,9 @@ const submitForm = () => {
 
   store.dispatch("setQuantityOfQuestions", newQuantityOfQuestions.value);
   store.dispatch("setFilePdf", newFilePDF);
-  router.push("/quiz");
+
+  console.log(store.state.filePdf);
+  // router.push("/quiz");
 };
 </script>
 <template>
