@@ -3,34 +3,39 @@ import { useRoute } from "vue-router";
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 import Test from "./Test.vue";
-import axios from 'axios';
+import axios from "axios";
 
 const route = useRoute();
 const store = useStore();
 
 let loading = ref(true);
 let responseData = ref(null);
+const schoolSubjects = store.state.schoolSubjects;
 
- const requestQuestions = async () => {
-    const formData = new FormData();
-    formData.append("schoolSubjects", store.state.schoolSubjects);
-    formData.append("difficultyLevel", store.state.difficultyLevel);
-    formData.append("quantityOfQuestions", store.state.quantityOfQuestions);
+const requestQuestions = async () => {
+  const formData = new FormData();
+  formData.append("schoolSubjects", store.state.schoolSubjects);
+  formData.append("difficultyLevel", store.state.difficultyLevel);
+  formData.append("quantityOfQuestions", store.state.quantityOfQuestions);
 
-    try {
-        const response = await axios.post("http://localhost/api/adaptive-quiz/form", formData, {
-            withCredentials: true,
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Accept': 'application/json'
-            }
-        });
-        loading.value = false;
-        responseData = response.data;
-    } catch (error) {
-        console.error('Error:', error);
-    }
-}
+  try {
+    const response = await axios.post(
+      "http://localhost/api/adaptive-quiz/form",
+      formData,
+      {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          Accept: "application/json",
+        },
+      }
+    );
+    loading.value = false;
+    responseData = response.data;
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
 
 onMounted(() => {
   requestQuestions();
@@ -46,7 +51,7 @@ onMounted(() => {
     class="w-2/5 mx-auto bg-white p-6 rounded-md shadow-md mt-10 mb-10"
     v-else
   >
-    <Test :responseData="responseData" />
+    <Test v-bind:questionsGenerated="responseData" v-bind:schoolSubjects="schoolSubjects" />
   </div>
 </template>
 <style scoped>
