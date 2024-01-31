@@ -48,7 +48,7 @@ const submitForm = () => {
   }
 
   store.dispatch("setQuantityOfQuestions", newQuantityOfQuestions.value);
-  store.dispatch("setFilePDF", newFilePDF);
+  store.dispatch("setFilePdf", newFilePDF);
   router.push("/quiz");
 };
 </script>

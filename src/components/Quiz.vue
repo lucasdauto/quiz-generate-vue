@@ -1,7 +1,7 @@
 <script setup>
 import { useRoute } from "vue-router";
 import { ref, onMounted } from "vue";
-import { useStore } from "vuex";
+import _default, { useStore } from "vuex";
 import Test from "./Test.vue";
 import axios from "axios";
 
@@ -19,15 +19,15 @@ const requestQuestions = async () => {
   const formData = new FormData();
   formData.append("quantityOfQuestions", store.state.quantityOfQuestions);
 
-  if (!store.state.filePDF && store.state.schoolSubjects) {
+  if (!(store.state.filePdf) && (store.state.schoolSubjects)) {
     formData.append("schoolSubjects", store.state.schoolSubjects);
     formData.append("difficultyLevel", store.state.difficultyLevel);
 
     url = "http://localhost/api/adaptive-quiz/form";
   }
 
-  if (store.state.filePDF && !store.state.schoolSubjects) {
-    formData.append("filePDF", store.state.filePDF);
+  if ((store.state.filePdf) && !(store.state.schoolSubjects)) {
+    formData.append("filePdf", store.state.filePdf);
     url = "http://localhost/api/adaptive-quiz/pdf";
   }
 
@@ -49,7 +49,7 @@ const requestQuestions = async () => {
     store.dispatch("setSchoolSubjects", null);
     store.dispatch("setDifficultyLevel", null);
     store.dispatch("setQuantityOfQuestions", null);
-    store.dispatch("setFilePDF", null);
+    store.dispatch("setFilePdf", null);
   }
 };
 
