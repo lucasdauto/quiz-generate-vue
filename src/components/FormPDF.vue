@@ -1,9 +1,10 @@
 <script setup>
-import { ref, onMounted } from "vue";
-import { initFlowbite } from "flowbite";
 import WhiteLogo from "./common/WhiteLogo.vue";
 import { useToast } from "vue-toastification";
+import { initFlowbite } from "flowbite";
 import { useRouter } from "vue-router";
+import { ref, onMounted } from "vue";
+import { useStore } from "vuex";
 
 // initialize components based on data attribute selectors
 onMounted(() => {
@@ -13,6 +14,10 @@ onMounted(() => {
 const file = ref(null);
 const toast = useToast();
 const router = useRouter();
+const store = useStore();
+
+const newQuantityOfQuestions = ref("");
+const newFilePDF = ref(null);
 
 const handleFileChange = (event) => {
   const selectedFile = event.target.files[0];
@@ -84,6 +89,25 @@ const submitForm = () => {
         id="input-file-help"
       >
         Somente arquivos PDF (.pdf) são aceitos. (Tamanho máximo: 20MB)
+      </div>
+      <div class="mb-4">
+        <label
+          for="quantityOfQuestions"
+          class="block text-sm font-medium text-gray-600"
+          :for="quantityOfQuestions"
+          >Quantidade de questões:</label
+        >
+        <select
+          id="quantityOfQuestions"
+          v-model="newQuantityOfQuestions"
+          name="quantityOfQuestions"
+          class="mt-1 p-2 w-full border rounded-md"
+          required
+        >
+          <option value="10">10</option>
+          <option value="15">15</option>
+          <option value="20">20</option>
+        </select>
       </div>
       <div class="w-full flex items-right justify-end mt-8">
         <button

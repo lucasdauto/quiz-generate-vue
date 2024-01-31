@@ -2,9 +2,10 @@ import { createStore } from "vuex";
 
 export default createStore({
   state: {
-    schoolSubjects: "1",
-    difficultyLevel: "2",
-    quantityOfQuestions: "3",
+    schoolSubjects: null,
+    difficultyLevel: null,
+    quantityOfQuestions: null,
+    filePdf: null,
   },
   mutations: {
     SET_SCHOOL_SUBJECTS(state, payload) {
@@ -16,6 +17,9 @@ export default createStore({
     SET_QUANTITY_OF_QUESTIONS(state, payload) {
       state.quantityOfQuestions = payload;
     },
+    SET_FILE_PDF(state, payload) {
+      state.filePdf = payload;
+    },
   },
   actions: {
     setSchoolSubjects({ commit }, payload) {
@@ -26,6 +30,9 @@ export default createStore({
     },
     setQuantityOfQuestions({ commit }, payload) {
       commit("SET_QUANTITY_OF_QUESTIONS", payload);
+    },
+    setFilePdf({ commit }, payload) {
+      commit("SET_FILE_PDF", payload);
     },
   },
   getters: {},
