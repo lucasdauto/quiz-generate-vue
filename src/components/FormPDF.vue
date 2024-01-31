@@ -24,6 +24,7 @@ const handleFileChange = (event) => {
 
   if (selectedFile) {
     const isPdf = selectedFile.name.toLowerCase().endsWith(".pdf");
+    newFilePDF = selectedFile;
 
     if (!isPdf) {
       toast.error("Somente arquivos PDF (.pdf) são aceitos.", {
@@ -46,7 +47,9 @@ const submitForm = () => {
     return;
   }
 
-  router.push({ name: "quiz" });
+  store.dispatch("setQuantityOfQuestions", newQuantityOfQuestions.value);
+  store.dispatch("setFilePDF", newFilePDF);
+  router.push("/quiz");
 };
 </script>
 <template>

@@ -10,30 +10,46 @@ const store = useStore();
 
 let loading = ref(true);
 let responseData = ref(null);
-const schoolSubjects = store.state.schoolSubjects;
+const schoolSubjects = store.state.schoolSubjects
+  ? store.state.schoolSubjects
+  : "";
+let url = ref("");
 
 const requestQuestions = async () => {
   const formData = new FormData();
-  formData.append("schoolSubjects", store.state.schoolSubjects);
-  formData.append("difficultyLevel", store.state.difficultyLevel);
   formData.append("quantityOfQuestions", store.state.quantityOfQuestions);
 
+  if (!store.state.filePDF && store.state.schoolSubjects) {
+    formData.append("schoolSubjects", store.state.schoolSubjects);
+    formData.append("difficultyLevel", store.state.difficultyLevel);
+
+    url = "http://localhost/api/adaptive-quiz/form";
+  }
+
+  if (store.state.filePDF && !store.state.schoolSubjects) {
+    formData.append("filePDF", store.state.filePDF);
+    url = "http://localhost/api/adaptive-quiz/pdf";
+  }
+
   try {
-    const response = await axios.post(
-      "http://localhost/api/adaptive-quiz/form",
-      formData,
-      {
-        withCredentials: true,
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          Accept: "application/json",
-        },
-      }
-    );
+    const response = await axios.post(url, formData, {
+      withCredentials: true,
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Accept: "application/json",
+      },
+    });
     loading.value = false;
     responseData = response.data;
   } catch (error) {
     console.error("Error:", error);
+  }
+
+  if (responseData) {
+    store.dispatch("setSchoolSubjects", null);
+    store.dispatch("setDifficultyLevel", null);
+    store.dispatch("setQuantityOfQuestions", null);
+    store.dispatch("setFilePDF", null);
   }
 };
 
@@ -51,7 +67,10 @@ onMounted(() => {
     class="w-2/5 mx-auto bg-white p-6 rounded-md shadow-md mt-10 mb-10"
     v-else
   >
-    <Test v-bind:questionsGenerated="responseData" v-bind:schoolSubjects="schoolSubjects" />
+    <Test
+      v-bind:questionsGenerated="responseData"
+      v-bind:schoolSubjects="schoolSubjects"
+    />
   </div>
 </template>
 <style scoped>
