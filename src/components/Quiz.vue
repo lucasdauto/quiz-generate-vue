@@ -1,30 +1,53 @@
 <script setup>
-import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
+import { ref, onMounted } from "vue";
+import { useStore } from "vuex";
 import Test from "./Test.vue";
-
+import axios from 'axios';
 
 const route = useRoute();
-const schoolSubjects = route.params.schoolSubjects;
-const difficultyLevel = route.params.difficultyLevel;
+const store = useStore();
 
 let loading = ref(true);
+let responseData = ref(null);
+
+ const requestQuestions = async () => {
+    const formData = new FormData();
+    formData.append("schoolSubjects", store.state.schoolSubjects);
+    formData.append("difficultyLevel", store.state.difficultyLevel);
+    formData.append("quantityOfQuestions", store.state.quantityOfQuestions);
+
+    try {
+        const response = await axios.post("http://localhost/api/adaptive-quiz/form", formData, {
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Accept': 'application/json'
+            }
+        });
+        loading.value = false;
+        responseData = response.data;
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
 
 onMounted(() => {
-  setTimeout(() => {
-    loading.value = false;
-  }, 5000);
+  requestQuestions();
 });
 </script>
 
 <template>
-    <div v-if="loading">
-      <span class="loader"></span>
-      <p class="text-white font-bold">Carregando...</p>
-    </div>
-    <div class="w-2/5 mx-auto bg-white p-6 rounded-md shadow-md mt-10 mb-10" v-else>
-      <Test />
-    </div>
+  <div v-if="loading">
+    <span class="loader"></span>
+    <p class="text-white font-bold">Carregando...</p>
+  </div>
+  <div
+    class="w-2/5 mx-auto bg-white p-6 rounded-md shadow-md mt-10 mb-10"
+    v-else
+  >
+    <Test :responseData="responseData" />
+  </div>
 </template>
 <style scoped>
 .loader {
