@@ -14,28 +14,31 @@ const schoolSubjects = store.state.schoolSubjects
   ? store.state.schoolSubjects
   : "";
 let url = ref("");
+let content = ref("");
 
 const requestQuestions = async () => {
   const formData = new FormData();
   formData.append("quantityOfQuestions", store.state.quantityOfQuestions);
 
-  if (!(store.state.filePdf) && (store.state.schoolSubjects)) {
+  if (!store.state.filePdf && store.state.schoolSubjects) {
     formData.append("schoolSubjects", store.state.schoolSubjects);
     formData.append("difficultyLevel", store.state.difficultyLevel);
 
     url = "http://localhost/api/adaptive-quiz/form";
+    content = "application/x-www-form-urlencoded";
   }
 
-  if ((store.state.filePdf) && !(store.state.schoolSubjects)) {
+  if (store.state.filePdf && !store.state.schoolSubjects) {
     formData.append("filePdf", store.state.filePdf);
     url = "http://localhost/api/adaptive-quiz/pdf";
+    content = "multipart/form-data";
   }
 
   try {
     const response = await axios.post(url, formData, {
       withCredentials: true,
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
+        "Content-Type": content,
         Accept: "application/json",
       },
     });
@@ -43,7 +46,6 @@ const requestQuestions = async () => {
     responseData = response.data;
 
     console.log(responseData);
-    
   } catch (error) {
     console.error("Error:", error);
   }
