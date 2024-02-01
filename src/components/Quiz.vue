@@ -29,7 +29,7 @@ const requestQuestions = async () => {
   }
 
   if (store.state.filePdf && !store.state.schoolSubjects) {
-    formData.append("filePdf", store.state.filePdf);
+    formData.append("pdf", store.state.filePdf);
     url = "http://localhost/api/adaptive-quiz/pdf";
     content = "multipart/form-data";
   }

@@ -50,8 +50,7 @@ const submitForm = () => {
   store.dispatch("setQuantityOfQuestions", newQuantityOfQuestions.value);
   store.dispatch("setFilePdf", newFilePDF);
 
-  console.log(store.state.filePdf);
-  // router.push("/quiz");
+  router.push("/quiz");
 };
 </script>
 <template>
