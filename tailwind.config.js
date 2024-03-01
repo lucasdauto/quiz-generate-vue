@@ -3,6 +3,7 @@ export default {
   content: [
     "./public/**/*.html",
     "./src/**/*.vue",
+    "./src/**/*.{vue,js,ts,jsx,tsx}",
     "./src/**/*.js",
     "node_modules/flowbite-vue/**/*.{js,jsx,ts,tsx,vue}",
     "node_modules/flowbite/**/*.{js,jsx,ts,tsx}",

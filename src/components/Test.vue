@@ -1,7 +1,7 @@
 <template>
   <section class="mb-8">
     <h2 class="text-center text-2xl font-bold">
-      {{ schoolSubjects.toUpperCase() }}
+      {{ schoolSubjects }}
     </h2>
   </section>
   <form @submit.prevent="submitForm" class="space-y-4" v-if="!showResults">
@@ -51,7 +51,7 @@
         >
           Sua resposta está
           {{ userAnswers[index] !== question.correta ? "errada" : "correta" }}:
-          {{ userAnswers[index].toUpperCase() }} -
+          {{ userAnswers[index] }} -
           {{ question.alternativas[userAnswers[index]] }}
           <br />
         </span>

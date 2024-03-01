@@ -22,11 +22,39 @@ const routes = [
     name: "pdf",
     component: () => import("./components/FormPDF.vue"),
   },
+  {
+    path: "/login",
+    name: "login",
+    component: () => import("./components/Login.vue"),
+  }
 ];
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem('token_user');
+  const tokenExpiration = localStorage.getItem('token_expiration');
+
+  if (to.name !== 'login') {
+    if (!token || !tokenExpiration || new Date().getTime() >= parseInt(tokenExpiration, 10)) {
+      next('/login');
+    } else {
+      const expirationTime = parseInt(tokenExpiration, 10);
+      const currentTime = new Date().getTime();
+      const timeRemaining = expirationTime - currentTime;
+
+      if (timeRemaining <= 0) {
+        next('/login');
+      } else {
+        next();
+      }
+    }
+  } else {
+    next();
+  }
 });
 
 export default router;
