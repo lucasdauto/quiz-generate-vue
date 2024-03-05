@@ -12,24 +12,10 @@ const toast = useToast();
 const email = ref("");
 
 async function login() {
-    const response = await authenticate(email.value, password.value);
-    if (response.status === 200) {
-      toast.success("Login efetuado com sucesso!\nRedirecionando...");
-
-      localStorage.setItem('token_user', response.access_token);
-      localStorage.setItem('token_expiration', response.expire_in);
-
-      setTimeout(() => {
-        router.push("/");
-      }, 1000);
-    }
-}
-
-async function authenticate(email, password) {
   try {
     const formData = new URLSearchParams();
-    formData.append('email', email);
-    formData.append('password', password);
+    formData.append('email', email.value);
+    formData.append('password', password.value);
 
     const response = await axios.post(`${api}/login`, formData, {
       headers: {
@@ -38,14 +24,26 @@ async function authenticate(email, password) {
       }
     });
 
-    return response;
-    
+    if (response.status === 200) {
+      toast.success("Login efetuado com sucesso!\nRedirecionando...");
+
+      localStorage.setItem('token_user', response.data.access_token);
+      localStorage.setItem('token_expiration', response.expire_in);
+
+      setTimeout(() => {
+        console.log('redirecionando...');
+        router.push("/");
+      }, 500);
+    }
+
+
   } catch (error) {
     if(error.response.status === 401) {
       toast.error("E-mail ou senha inválidos");
     }
   }
 }
+
 </script>
 
 <template>
