@@ -1,7 +1,7 @@
 <script setup>
 import { useRoute } from "vue-router";
 import { ref, onMounted } from "vue";
-import _default, { useStore } from "vuex";
+import { useStore } from "vuex";
 import Test from "./Test.vue";
 import axios from "axios";
 
@@ -10,11 +10,10 @@ const store = useStore();
 
 let loading = ref(true);
 let responseData = ref(null);
-const schoolSubjects = store.state.schoolSubjects
-  ? store.state.schoolSubjects
-  : "";
+let schoolSubjects = ref(store.state.schoolSubjects ? store.state.schoolSubjects : "");
 let url = ref("");
 let content = ref("");
+const api = import.meta.env.VITE_API_URL;
 
 const requestQuestions = async () => {
   const formData = new FormData();
@@ -24,33 +23,35 @@ const requestQuestions = async () => {
     formData.append("schoolSubjects", store.state.schoolSubjects);
     formData.append("difficultyLevel", store.state.difficultyLevel);
 
-    url = "http://localhost/api/adaptive-quiz/form";
+    url = `${api}/form`;
     content = "application/x-www-form-urlencoded";
   }
 
   if (store.state.filePdf && !store.state.schoolSubjects) {
     formData.append("pdf", store.state.filePdf);
-    url = "http://localhost/api/adaptive-quiz/pdf";
+    url = `${api}/pdf`;
     content = "multipart/form-data";
   }
 
   try {
+    console.log(url);
+    const token = sessionStorage.getItem('token_user'); // Obtém o token do sessionStorage
     const response = await axios.post(url, formData, {
-      withCredentials: true,
       headers: {
         "Content-Type": content,
-        Accept: "application/json",
+        "Accept": "application/json",
+        "Authorization": `Bearer ${token}` // Adiciona o token ao cabeçalho da requisição
       },
     });
     loading.value = false;
-    responseData = response.data;
+    responseData.value = response.data;
 
-    console.log(responseData);
+    console.log(responseData.value);
   } catch (error) {
     console.error("Error:", error);
   }
 
-  if (responseData) {
+  if (responseData.value) {
     store.dispatch("setSchoolSubjects", null);
     store.dispatch("setDifficultyLevel", null);
     store.dispatch("setQuantityOfQuestions", null);
@@ -69,15 +70,16 @@ onMounted(() => {
     <p class="text-white font-bold">Carregando...</p>
   </div>
   <div
-    class="w-2/5 mx-auto bg-white p-6 rounded-md shadow-md mt-10 mb-10"
-    v-else
+      class="w-2/5 mx-auto bg-white p-6 rounded-md shadow-md mt-10 mb-10"
+      v-else
   >
     <Test
-      v-bind:questionsGenerated="responseData"
-      v-bind:schoolSubjects="schoolSubjects"
+        :questionsGenerated="responseData"
+        :schoolSubjects="schoolSubjects"
     />
   </div>
 </template>
+
 <style scoped>
 .loader {
   font-size: 48px;
@@ -112,18 +114,18 @@ onMounted(() => {
     opacity: 1;
     transform: rotate(0deg);
     box-shadow: 0 0 0 -0.5em currentcolor, 0 0 0 -0.5em currentcolor,
-      0 0 0 -0.5em currentcolor, 0 0 0 -0.5em currentcolor,
-      0 0 0 -0.5em currentcolor, 0 0 0 -0.5em currentcolor,
-      0 0 0 -0.5em currentcolor, 0 0 0 -0.5em currentcolor;
+    0 0 0 -0.5em currentcolor, 0 0 0 -0.5em currentcolor,
+    0 0 0 -0.5em currentcolor, 0 0 0 -0.5em currentcolor,
+    0 0 0 -0.5em currentcolor, 0 0 0 -0.5em currentcolor;
   }
   100% {
     opacity: 0;
     transform: rotate(180deg);
     box-shadow: -1em -1em 0 -0.35em currentcolor,
-      0 -1.5em 0 -0.35em currentcolor, 1em -1em 0 -0.35em currentcolor,
-      -1.5em 0 0 -0.35em currentcolor, 1.5em -0 0 -0.35em currentcolor,
-      -1em 1em 0 -0.35em currentcolor, 0 1.5em 0 -0.35em currentcolor,
-      1em 1em 0 -0.35em currentcolor;
+    0 -1.5em 0 -0.35em currentcolor, 1em -1em 0 -0.35em currentcolor,
+    -1.5em 0 0 -0.35em currentcolor, 1.5em -0 0 -0.35em currentcolor,
+    -1em 1em 0 -0.35em currentcolor, 0 1.5em 0 -0.35em currentcolor,
+    1em 1em 0 -0.35em currentcolor;
   }
 }
 </style>

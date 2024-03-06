@@ -35,8 +35,8 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const token = localStorage.getItem('token_user');
-  const tokenExpiration = localStorage.getItem('token_expiration');
+  const token = sessionStorage.getItem('token_user');
+  const tokenExpiration = sessionStorage.getItem('token_expiration');
 
   if (to.name !== 'login') {
     if (!token || !tokenExpiration || new Date().getTime() >= parseInt(tokenExpiration, 10)) {

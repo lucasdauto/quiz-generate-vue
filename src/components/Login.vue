@@ -26,9 +26,9 @@ async function login() {
 
     if (response.status === 200) {
       toast.success("Login efetuado com sucesso!\nRedirecionando...");
-
-      localStorage.setItem('token_user', response.data.access_token);
-      localStorage.setItem('token_expiration', response.expire_in);
+      console.log(response.data);
+      sessionStorage.setItem('token_user', response.data.access_token);
+      sessionStorage.setItem('token_expiration', response.data.expires);
 
       setTimeout(() => {
         console.log('redirecionando...');
