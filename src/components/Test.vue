@@ -6,29 +6,29 @@
   </section>
   <form @submit.prevent="submitForm" class="space-y-4" v-if="!showResults">
     <div
-      v-for="(question, index) in questions"
-      :key="index"
-      class="bg-white shadow rounded px-6 py-4"
+        v-for="(question, index) in questions"
+        :key="index"
+        class="bg-white shadow rounded px-6 py-4"
     >
       <p class="font-bold mb-2">{{ question.pergunta }}</p>
       <div
-        v-for="(answer, key) in question.alternativas"
-        :key="key"
-        class="flex items-center space-x-2"
+          v-for="(answer, key) in question.alternativas"
+          :key="key"
+          class="flex items-center space-x-2"
       >
         <input
-          type="radio"
-          :value="key"
-          v-model="userAnswers[index]"
-          :id="key"
-          class="form-radio text-blue-500"
+            type="radio"
+            :value="key"
+            v-model="userAnswers[index]"
+            :id="key"
+            class="form-radio text-blue-500"
         />
         <label :for="key" class="text-gray-700">{{ answer }}</label>
       </div>
     </div>
     <button
-      type="submit"
-      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-right"
+        type="submit"
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-right"
     >
       Enviar resposta
     </button>
@@ -37,14 +37,14 @@
   <div v-if="showResults" class="mt-4">
     <h2 class="text-center text-2xl font-bold">Resultados:</h2>
     <div
-      v-for="(question, index) in questions"
-      :key="index"
-      class="bg-white shadow rounded px-6 py-4 mt-4"
+        v-for="(question, index) in questions"
+        :key="index"
+        class="bg-white shadow rounded px-6 py-4 mt-4"
     >
       <p class="font-bold mb-2">{{ question.pergunta }}</p>
       <div class="flex items-center space-x-2">
         <span
-          :class="{
+            :class="{
             'text-green-500': userAnswers[index] === question.correta,
             'text-red-500': userAnswers[index] !== question.correta,
           }"
@@ -56,15 +56,15 @@
           <br />
         </span>
         <span
-          v-if="userAnswers[index] === question.correta"
-          class="text-green-500"
+            v-if="userAnswers[index] === question.correta"
+            class="text-green-500"
         >
           Resposta correta: {{ question.correta.toUpperCase() }} -
           {{ question.alternativas[question.correta] }}
         </span>
         <span
-          v-if="userAnswers[index] !== question.correta"
-          class="text-red-500"
+            v-if="userAnswers[index] !== question.correta"
+            class="text-red-500"
         >
           Resposta correta: {{ question.correta.toUpperCase() }} -
           {{ question.alternativas[question.correta] }}
@@ -85,7 +85,8 @@ let questions = [];
 
 if (props.questionsGenerated) {
   try {
-    questions = JSON.parse(props.questionsGenerated);
+    const response = JSON.parse(props.questionsGenerated);
+    questions = response.response; // Ajuste para acessar a propriedade 'response' do objeto
   } catch (error) {
     console.error("Erro ao analisar JSON em questionsGenerated:", error);
   }
