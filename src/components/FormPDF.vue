@@ -39,13 +39,15 @@ const handleFileChange = (event) => {
   }
 };
 
-const submitForm = () => {
+const submitForm = (event) => {
   if (!newFilePDF.value) {
     toast.error("Execute o upload de um arquivo PDF para continuar.", {
       timeout: 6000,
     });
     return;
   }
+
+  console.log(event.target);
 
   store.dispatch("setQuantityOfQuestions", newQuantityOfQuestions.value);
   store.dispatch("setFilePdf", newFilePDF);
@@ -117,9 +119,19 @@ const submitForm = () => {
         <button
           type="submit"
           class="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
+          value="quiz"
         >
           Gerar questões
         </button>
+        <button
+
+          type="submit"
+          class="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
+          value="pdf"
+          >
+            Gerar questões (PDF)
+        </button>
+
       </div>
     </form>
   </div>

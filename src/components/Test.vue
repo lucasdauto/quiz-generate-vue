@@ -10,7 +10,7 @@
         :key="index"
         class="bg-white shadow rounded px-6 py-4"
     >
-      <p class="font-bold mb-2">{{ question.pergunta }}</p>
+      <p class="font-bold mb-2">{{ index }}) {{ question.pergunta }}</p>
       <div
           v-for="(answer, key) in question.alternativas"
           :key="key"
